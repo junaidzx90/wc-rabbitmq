@@ -1,0 +1,100 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+#customer_informations fieldset {
+    border: 1px solid #b7b7b7 !important;
+    padding: 25px;
+    margin: 30px 0;
+    width: fit-content;
+    border-radius: 3px;
+}
+
+.wcrm_inputs {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    margin-bottom: 20px;
+    gap: 5px;
+}
+
+div#customer_informations table {
+    text-align: left;
+    border-collapse: collapse;
+}
+
+div#customer_informations table th,
+div#customer_informations table td {
+    width: 118px;
+}
+
+div#customer_informations table thead tr th {
+    padding: 5px;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+div#customer_informations table tbody td {
+    padding: 5px;
+}
+
+span.removeAddr {
+    font-size: 33px;
+    transform: rotate(45deg);
+    position: absolute;
+    top: 9px;
+    color: red;
+    cursor: pointer;
+    user-select: none;
+}
+
+.import_button {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.rabbitLoader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    z-index: 9999;
+}
+
+div#rabbit_wrapper {
+    display: flex;
+    gap: 40px;
+}
+form#rabbit-setting-form,.export__imports {
+    width: 40%;
+}
+.export_buttons {
+    margin: 20px 0;
+}
+.export__imports .inp_box {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+.export__imports .inp_box:last-child{
+    border-bottom: 0px;
+}
+.export__imports .inp_box button {
+    margin-top: 10px;
+    width: fit-content;
+}
