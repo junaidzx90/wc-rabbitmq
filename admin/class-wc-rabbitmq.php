@@ -59,7 +59,7 @@ class Wc_Rabbitmq {
 		if ( defined( 'WC_RABBITMQ_VERSION' ) ) {
 			$this->version = WC_RABBITMQ_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '1.0.1';
 		}
 		$this->plugin_name = 'wc-rabbitmq';
 	}
@@ -77,9 +77,9 @@ class Wc_Rabbitmq {
 
 		add_action( 'woocommerce_checkout_order_processed', [$this, 'rabbit_msg_action'], 10, 3 );
 
-		add_action( 'edit_user_profile', [$this, 'wcrm_custom_user_profile_fields'] );
-
-		add_action( 'edit_user_profile_update', [$this, 'wcrm_save_custom_user_profile_fields'] );
+		add_action( 'edit_user_profile', [$this, 'wcrm_custom_user_profile_fields'], 99 );
+		add_action( 'show_user_profile', [$this, 'wcrm_custom_user_profile_fields'], 99 );
+		add_action( 'edit_user_profile_update', [$this, 'wcrm_save_custom_user_profile_fields'], 99 );
 
 		add_action( 'wp_ajax_import_customers', [$this, 'import_customers'] );
 		add_action( 'wp_ajax_nopriv_import_customers', [$this, 'import_customers'] );
@@ -132,12 +132,7 @@ class Wc_Rabbitmq {
 
 	function wcrm_custom_user_profile_fields( $user ){
 		global $wpdb;
-		
 		$user_id = $user->data->ID;
-
-		if(!$this->user_has_role($user_id, 'customer')){
-			return;
-		}
 
 		$results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}wcrabbit_customers WHERE user_id = {$user->ID}");
 
@@ -239,10 +234,6 @@ class Wc_Rabbitmq {
 	function wcrm_save_custom_user_profile_fields( $user_id ){
 		try {
 			global $wpdb;
-			if(!$this->user_has_role($user_id, 'customer')){
-				return;
-			}
-
 			$wcrm_customer_id = $_POST['wcrm_customer_id'];
 			$fields = [];
 			if(isset($_POST['wcrm_fields'])){
@@ -302,10 +293,10 @@ class Wc_Rabbitmq {
 		echo '<input type="number" placeholder="5672" name="wcrabbitmq_port" value="'.get_option('wcrabbitmq_port').'">';
 	}
 	function wcrabbitmq_username_cb(){
-		echo '<input type="text" placeholder="guest" name="wcrabbitmq_username" value="'.get_option('wcrabbitmq_username').'">';
+		echo '<input type="text" placeholder="testing" name="wcrabbitmq_username" value="'.get_option('wcrabbitmq_username').'">';
 	}
 	function wcrabbitmq_password_cb(){
-		echo '<input type="text" placeholder="guest" name="wcrabbitmq_password" value="'.get_option('wcrabbitmq_password').'">';
+		echo '<input type="text" placeholder="testing22" name="wcrabbitmq_password" value="'.get_option('wcrabbitmq_password').'">';
 	}
 	function wcrabbitmq_queueu_name_cb(){
 		echo '<input type="text" name="wcrabbitmq_queueu_name" value="'.get_option('wcrabbitmq_queueu_name').'">';
@@ -344,8 +335,6 @@ class Wc_Rabbitmq {
 				</div>
 			</div>
 		</div>
-		
-
 		<?php
 	}
 
@@ -766,8 +755,8 @@ class Wc_Rabbitmq {
 
 			$host = ((get_option('wcrabbitmq_host')) ? get_option('wcrabbitmq_host') : 'localhost');
 			$port = ((get_option('wcrabbitmq_port')) ? intval(get_option('wcrabbitmq_port')) : 5672);
-			$username = ((get_option('wcrabbitmq_username')) ? get_option('wcrabbitmq_username') : 'guest');
-			$password = ((get_option('wcrabbitmq_password')) ? get_option('wcrabbitmq_password') : 'guest');
+			$username = ((get_option('wcrabbitmq_username')) ? get_option('wcrabbitmq_username') : 'testing');
+			$password = ((get_option('wcrabbitmq_password')) ? get_option('wcrabbitmq_password') : 'testing22');
 			$queueu_name = ((get_option('wcrabbitmq_queueu_name')) ? get_option('wcrabbitmq_queueu_name') : 'hello');
 
 			$messageWillSent = true;
